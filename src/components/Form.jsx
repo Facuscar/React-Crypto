@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import useSelectCrypto from '../hooks/useSelectCrypto';
+
 const InputSubmit = styled.input`
     background-color: #9497ff;
     border: none;
@@ -25,8 +27,20 @@ const handleSubmit = (e) => {
 }
 
 function Form() {
+
+    const fiat = [
+        {id: 'USD', name: 'United State Dolar'},
+        {id: 'ARG', name: 'Peso Argentino'},
+        {id: 'EUR', name: 'Euro'},
+        {id: 'GBP', name: 'Pound Sterling'},
+    ]
+
+    const [SelectCrypto] = useSelectCrypto('Choose your crypto!', fiat);
+
     return ( 
         <form action="">
+            <SelectCrypto></SelectCrypto>
+
             <InputSubmit type="submit" value="Get price" onClick={(e) => handleSubmit(e)}/>
         </form>
      );
