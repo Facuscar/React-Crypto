@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import cryptoImage from './img/crypto-image.png';
 
+import Form from './components/Form';
+
 const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
@@ -44,7 +46,9 @@ function App() {
       <Image src={cryptoImage} alt="image with different crypto logos"/>
       <div>
         <Heading>See real time market prices</Heading>
+        <Form></Form>
       </div>
+      
       
     </Container>
   )
