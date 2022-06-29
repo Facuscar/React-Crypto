@@ -23,6 +23,19 @@ const Heading = styled.h1`
   font-family: 'Lato', sans-serif;
   color: #FFF;
   text-align: center;
+  font-weight: 700;
+  margin-top: 80px;
+  margin-bottom: 50px;
+  font-size: 34px;
+
+  &::after{
+    content: '';
+    width: 100px;
+    height: 6px;
+    background-color: #66a2fe;
+    display: block;
+    margin: 10px auto 0;
+  }
 `
 
 function App() {
