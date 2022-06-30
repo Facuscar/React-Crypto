@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { fiat } from '../data/coins';
+import { API_KEY } from '../data/env';
 
 import { useEffect } from 'react';
 
@@ -34,11 +35,25 @@ function Form() {
    
     const [currency, SelectCurrency] = useSelectCurrency('Choose your currency!', fiat);
 
+    useEffect(() => {
+        const consultAPI = async () => {
+            const url = `https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD&api_key=${API_KEY}`
+
+            const resp = await fetch(url);
+
+            const result = await resp.json()
+
+            console.log(result.Data);
+        }
+
+        consultAPI();
+    }, []);
+
     return ( 
         <form action="">
             <SelectCurrency></SelectCurrency>
 
-            {state}
+            {currency}
 
             <InputSubmit type="submit" value="Get price" onClick={(e) => handleSubmit(e)}/>
         </form>
