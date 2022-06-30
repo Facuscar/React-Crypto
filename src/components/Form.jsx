@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { fiat } from '../data/coins';
 
-import useSelectCrypto from '../hooks/useSelectCrypto';
+import { useEffect } from 'react';
+
+import useSelectCurrency from '../hooks/useSelectCurrency';
 
 const InputSubmit = styled.input`
     background-color: #9497ff;
@@ -30,11 +32,13 @@ const handleSubmit = (e) => {
 function Form() {
 
    
-    const [SelectCrypto] = useSelectCrypto('Choose your currency!', fiat);
+    const [currency, SelectCurrency] = useSelectCurrency('Choose your currency!', fiat);
 
     return ( 
         <form action="">
-            <SelectCrypto></SelectCrypto>
+            <SelectCurrency></SelectCurrency>
+
+            {state}
 
             <InputSubmit type="submit" value="Get price" onClick={(e) => handleSubmit(e)}/>
         </form>
