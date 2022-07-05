@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 
 import useSelectCurrency from '../hooks/useSelectCurrency';
 
+import Error from './Error';
+
 const InputSubmit = styled.input`
     background-color: #9497ff;
     border: none;
@@ -25,17 +27,23 @@ const InputSubmit = styled.input`
     }
 `
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('You clicked me!');
-}
-
 function Form() {
     const [cryptos, setCryptos] = useState([]);
+    const [error, setError] = useState(false);
    
     const [currency, SelectCurrency] = useSelectCurrency('Choose your currency!', fiat);
     const [cryptoCurrency, SelectCryptoCurrency] = useSelectCurrency('Choose your crypto!', cryptos)
 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if([currency, cryptoCurrency].includes('')){
+            setError(true);
+            return;
+        }
+    }
+
+    
     useEffect(() => {
         const consultAPI = async () => {
             const url = `https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD&api_key=${API_KEY}`
@@ -59,6 +67,9 @@ function Form() {
     }, []);
 
     return ( 
+
+        <>
+        {error && <Error>You must select both a currency and a crypto currency!</Error>}
         <form action="" onSubmit={handleSubmit}>
             <SelectCurrency></SelectCurrency>
 
@@ -66,6 +77,7 @@ function Form() {
 
             <InputSubmit type="submit" value="Get price"/>
         </form>
+        </>
      );
 }
 
