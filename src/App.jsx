@@ -5,6 +5,7 @@ import { API_KEY } from './data/env';
 import { useState, useEffect } from 'react';
 
 import Form from './components/Form';
+import Result from './components/Result';
 
 const Container = styled.div`
   max-width: 900px;
@@ -46,7 +47,8 @@ const Heading = styled.h1`
 function App() {
 
   const [currencies, setCurrencies] = useState({});
-
+  const [result, setResult] = useState({});
+ 
   useEffect(() => {
     if(Object.keys(currencies).length > 0){
       const quoteCrypto = async () => {
@@ -56,7 +58,7 @@ function App() {
         const resp = await fetch(url);
         const result = await resp.json();
 
-        console.log(result.DISPLAY[cryptoCurrency][currency]);
+        setResult(result.DISPLAY[cryptoCurrency][currency]);
       }
 
       quoteCrypto()
@@ -69,7 +71,7 @@ function App() {
       <div>
         <Heading>See real time market prices</Heading>
         <Form setCurrencies={setCurrencies} ></Form>
-        {/* <Result></Result> */}
+        {result.PRICE && <Result result = {result}></Result>}
       </div>
       
       
