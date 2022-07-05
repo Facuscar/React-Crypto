@@ -39,8 +39,12 @@ function Form() {
         e.preventDefault();
         if([currency, cryptoCurrency].includes('')){
             setError(true);
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
             return;
         }
+        setError(false);
     }
 
     
@@ -69,7 +73,9 @@ function Form() {
     return ( 
 
         <>
-        {error && <Error>You must select both a currency and a crypto currency!</Error>}
+        <div className='error-container'>
+            {error && <Error>You must select both a currency and a crypto currency!</Error>}
+        </div>
         <form action="" onSubmit={handleSubmit}>
             <SelectCurrency></SelectCurrency>
 
