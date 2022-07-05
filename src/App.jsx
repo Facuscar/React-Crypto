@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 
 import Form from './components/Form';
 import Result from './components/Result';
+import Spinner from './components/Spinner';
 
 const Container = styled.div`
   max-width: 900px;
@@ -48,10 +49,12 @@ function App() {
 
   const [currencies, setCurrencies] = useState({});
   const [result, setResult] = useState({});
+  const [loading, setLoading] = useState(false);
  
   useEffect(() => {
     if(Object.keys(currencies).length > 0){
       const quoteCrypto = async () => {
+        setLoading(true);
         const {currency, cryptoCurrency} = currencies
         const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptoCurrency}&tsyms=${currency}&api_key=${API_KEY}`
 
@@ -59,6 +62,7 @@ function App() {
         const result = await resp.json();
 
         setResult(result.DISPLAY[cryptoCurrency][currency]);
+        setLoading(false);
       }
 
       quoteCrypto()
@@ -71,7 +75,8 @@ function App() {
       <div>
         <Heading>See real time market prices</Heading>
         <Form setCurrencies={setCurrencies} ></Form>
-        {result.PRICE && <Result result = {result}></Result>}
+        {!loading && result.PRICE && <Result result = {result}></Result>}
+        {loading && <Spinner /> }
       </div>
       
       
