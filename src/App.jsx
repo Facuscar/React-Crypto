@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
 import cryptoImage from './img/crypto-image.png';
+import { API_KEY } from './data/env';
+
+import { useState, useEffect } from 'react';
 
 import Form from './components/Form';
 
@@ -41,12 +44,32 @@ const Heading = styled.h1`
 `
 
 function App() {
+
+  const [currencies, setCurrencies] = useState({});
+
+  useEffect(() => {
+    if(Object.keys(currencies).length > 0){
+      const quoteCrypto = async () => {
+        const {currency, cryptoCurrency} = currencies
+        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptoCurrency}&tsyms=${currency}&api_key=${API_KEY}`
+
+        const resp = await fetch(url);
+        const result = await resp.json();
+
+        console.log(result.DISPLAY[cryptoCurrency][currency]);
+      }
+
+      quoteCrypto()
+    }
+  }, [currencies]);
+
   return (
     <Container>
       <Image src={cryptoImage} alt="image with different crypto logos"/>
       <div>
         <Heading>See real time market prices</Heading>
-        <Form></Form>
+        <Form setCurrencies={setCurrencies} ></Form>
+        {/* <Result></Result> */}
       </div>
       
       
