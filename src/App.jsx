@@ -78,8 +78,6 @@ function App() {
         {!loading && result.PRICE && <Result result = {result}></Result>}
         {loading && <Spinner /> }
       </div>
-      
-      
     </Container>
   )
 }
